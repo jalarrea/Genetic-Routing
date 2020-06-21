@@ -1,3 +1,4 @@
+import com.ga.routing.Draw;
 import com.ga.routing.Evolution;
 import com.ga.routing.Coordinates;
 
@@ -11,15 +12,14 @@ public class Main {
         /**
          * Genereation of points to test!.
          */
-        int values = 50;
+        int values = 200;
         Coordinates [] points = new Coordinates[values];
         for (int i = 0; i < values; i++) {
             points[i] = Main.getLocation(-79.908075, -2.1602453, 10000);
         }
 
-        int generations = 30;
+        int generations = 100;
         long startTime = System.currentTimeMillis();
-
         new Evolution(points, generations)
         .run();
 

@@ -1,5 +1,7 @@
 package com.ga.routing;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -30,6 +32,8 @@ public class Evolution {
 
     private ArrayList<int[]> population = new ArrayList<int[]>();
 
+    private Draw draw;
+
     private int [] values;
 
     private double [] fitnessValues;
@@ -55,6 +59,12 @@ public class Evolution {
         this.isReturnToDepot = isReturnToDepot;
     }
 
+    public Evolution(Coordinates [] points, int generations, Draw draw) {
+        this.points = points;
+        this.maxGenerations = generations;
+        this.draw = draw;
+    }
+
     public Evolution(Coordinates [] points, int generations) {
         this.points = points;
         this.maxGenerations = generations;
@@ -74,6 +84,14 @@ public class Evolution {
         }
     }
 
+    private void draw(){
+        JFrame frame = new JFrame("Routing-GA");
+        this.draw.setSize(400, 400);
+        frame.add(this.draw);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
     private void init() {
 
         this.values = new int[POPULATION_SIZE];
@@ -81,6 +99,8 @@ public class Evolution {
         this.roulette = new double[POPULATION_SIZE];
         this.UNCHANGED_GENS = 0;
 
+        this.draw = new Draw(points);
+        draw();
         /**
          * Step 1. Computing the distance matrix.
          */
@@ -327,6 +347,7 @@ public class Evolution {
             bestInd = population.get(bestIndex);
             bestValue = values[bestIndex];
             UNCHANGED_GENS = 0;
+            this.draw.setBestInd(bestInd);
             printBest();
             return;
         }
