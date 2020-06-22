@@ -28,6 +28,10 @@ public class Evolution {
 
     private boolean isReturnToDepot = false;
 
+    private long startTime = 0;
+
+    private long time = 0;
+
     private HashMap<String, Integer> distances = new HashMap<String, Integer>();
 
     private ArrayList<int[]> population = new ArrayList<int[]>();
@@ -79,14 +83,19 @@ public class Evolution {
      */
     public void run() {
         init();
-        for (int i = 0; i < this.maxGenerations; i++) {
+        for (int i = 0; i < this.maxGenerations-1; i++) {
             this.nextGeneration();
         }
+        this.draw.setNoGenerations(this.noGenerations);
+        this.draw.setTime(this.time);
+        this.draw.setBestInd(bestInd);
+
     }
 
     private void draw(){
-        JFrame frame = new JFrame("Routing-GA");
-        this.draw.setSize(400, 400);
+        JFrame frame = new JFrame("Routing-GA [Points: "+this.points.length+"]");
+        this.draw.setSize(400, 300);
+        frame.setLocation(100, 100);
         frame.add(this.draw);
         frame.pack();
         frame.setVisible(true);
@@ -98,8 +107,9 @@ public class Evolution {
         this.fitnessValues = new double[POPULATION_SIZE];
         this.roulette = new double[POPULATION_SIZE];
         this.UNCHANGED_GENS = 0;
+        this.startTime = System.currentTimeMillis();
 
-        this.draw = new Draw(points);
+        this.draw = new Draw(this.points, this.maxGenerations);
         draw();
         /**
          * Step 1. Computing the distance matrix.
@@ -274,6 +284,7 @@ public class Evolution {
     }
 
     private void doCrossover(int x, int y) {
+        this.noMutations++;
         /**
          * Forward
          */
@@ -338,6 +349,9 @@ public class Evolution {
         for (int i = 0; i < this.population.size(); i++) {
             values[i] = evaluate(this.population.get(i));
         }
+        long endTime = System.currentTimeMillis();
+
+        this.time = endTime - this.startTime;
 
         int bestIndex = getCurrentBest();
 //        System.out.println("Best index:"+bestIndex);
@@ -347,6 +361,8 @@ public class Evolution {
             bestInd = population.get(bestIndex);
             bestValue = values[bestIndex];
             UNCHANGED_GENS = 0;
+            this.draw.setNoGenerations(this.noGenerations);
+            this.draw.setTime(this.time);
             this.draw.setBestInd(bestInd);
             printBest();
             return;
