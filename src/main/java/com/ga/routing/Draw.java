@@ -42,13 +42,13 @@ public class Draw extends Canvas{
 
     private int computeLatZoom(double lat){
         int preLat = (int)((lat + 90)*1000);
-        preLat = preLat - (17550*5) +50;
+        preLat = preLat - (17550*5) +100;
         return preLat;
     }
 
     private int computeLngZoom(double lng){
         int preLng = (int)((lng + 180)*1000);
-        preLng = preLng - (19900*5) - 400;
+        preLng = preLng - (19900*5) - 300;
         return preLng;
     }
 

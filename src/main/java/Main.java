@@ -15,10 +15,10 @@ public class Main {
         int values = 100;
         Coordinates [] points = new Coordinates[values];
         for (int i = 0; i < values; i++) {
-            points[i] = Main.getLocation(-79.908075, -2.1602453, 10000);
+            points[i] = Main.getLocation(-79.908075, -2.1602453, 18000);
         }
 
-        int generations = 50;
+        int generations = 300;
         long startTime = System.currentTimeMillis();
         new Evolution(points, generations)
         .run();

@@ -94,7 +94,7 @@ public class Evolution {
 
     private void draw(){
         JFrame frame = new JFrame("Routing-GA [Points: "+this.points.length+"]");
-        this.draw.setSize(400, 300);
+        this.draw.setSize(600, 400);
         frame.setLocation(100, 100);
         frame.add(this.draw);
         frame.pack();
